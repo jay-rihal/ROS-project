@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 import rospy
 from std_msgs.msg import String
@@ -9,7 +8,7 @@ engine = pyttsx3.init()
 engine.setProperty('rate', 200)
 engine.setProperty('volume', 0.9)
 r = sr.Recognizer()
-speech = sr.Microphone(device_index=1)
+speech = sr.Microphone(device_index=2)
 
 
 def stt():
@@ -22,31 +21,17 @@ def stt():
         #engine.say("You said: " + recog)    
         engine.runAndWait()
     except sr.UnknownValueError:    
-        recog = None   
+        recog = ("Google Speech Recognition could not understand audio")    
         engine.runAndWait()
     except sr.RequestError as e:    
         recog = ("Could not request results from Google Speech Recognition service; {0}".format(e))    
         engine.runAndWait()
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-    #if recog != None:
+    pub = rospy.Publisher('voice', String, queue_size=10)
+    rospy.init_node('stt', anonymous=True)
+    rate = rospy.Rate(1) # 10hz
     while not rospy.is_shutdown():
         rospy.loginfo(recog)
         pub.publish(recog)
-        rate.sleep()
-        stt()
-
-
-def talker():
-    pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('talker', anonymous=True)
-    rate = rospy.Rate(10) # 10hz
-    reciever()
-    while not rospy.is_shutdown():
-        hello_str = string
-        rospy.loginfo(hello_str)
-        pub.publish(hello_str)
         rate.sleep()
 
 if __name__ == '__main__':
@@ -54,4 +39,9 @@ if __name__ == '__main__':
         stt()
     except rospy.ROSInterruptException:
         pass
+        
+
+#import sounddevice as sd
+#print(sd.query_devices() )
+
 
