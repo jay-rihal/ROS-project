@@ -59,7 +59,7 @@ def callback(data):
     text = data.data
     if text == "None":
         callback(data)
-    detect_intent_texts("robin-rrul", "12346", text, "en-US")
+    detect_intent_texts("AGENT_NAME_HERE", "12346", text, "en-US")
     #rospy.loginfo(rospy.get_caller_id() + 'I heard %s', response.query_result.fulfillment_text.text)
 
 
